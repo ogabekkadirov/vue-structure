@@ -4,12 +4,14 @@ export default {
     methods: {
         ...mapActions({
             list: 'LIST',
-            show: 'GET',
+            show: 'SHOW',
             store: 'STORE',
             edit: 'EDIT',
             delete: 'DELETE',
             setModel: 'SETMODEL',
-            updatePagination: 'updatePagination'
+            updatePagination: 'updatePagination',
+            emptyList: 'EMPTYLIST',
+            resetModel: 'RESETMODEL',
         }),
         hasType(type, slug) {
             return type === slug;
@@ -27,5 +29,4 @@ export default {
             return null;
         },
     },
-
-}
+};

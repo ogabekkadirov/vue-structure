@@ -1,10 +1,9 @@
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
 export default {
-
     data: () => ({
         loadingData: false,
         filter_query: {},
-        filter_relation_item: []
+        filter_relation_item: [],
     }),
     watch: {
         'pagination.page': {
@@ -28,7 +27,7 @@ export default {
     },
     created() {
         this.debouncedFetchData = _.debounce(this.fetchData, 100);
-        this.fetchModels()
+        this.fetchModels();
         this.updateFilter();
     },
 
@@ -36,32 +35,37 @@ export default {
         async fetchModels() {
             for (const index in this.filter) {
                 if (this.filter.hasOwnProperty(index)) {
-                    let item = this.filter[index]
+                    let item = this.filter[index];
                     if (item.type == 'select' && item.model) {
-                        let query = []
+                        let query = [];
+                        if (!item.action_name || item.action_name == null) {
+                            item.action_name = 'list';
+                        }
                         await this.list({
-                            model: item.model,
-                            query: query
-                        }).then(res => {
-                            this.filter[index].options = res.result.data.data
-                            if (item.key == 'type_id') {
-                                this.filter_relation_item = this.filter[index].options
-                            }
-                        }).catch(error => {
-                            this.$notify({
-                                title: "Error",
-                                message: "Ma'lumot olishda xatolik mavjud .",
-                                type: "error",
+                                model: item.model,
+                                action_name: item.action_name,
+                                query: query,
+                            })
+                            .then((res) => {
+                                this.filter[index].options = res.result.data;
+                                if (item.key == 'type_id') {
+                                    this.filter_relation_item = this.filter[index].options;
+                                }
+                            })
+                            .catch((error) => {
+                                this.$notify({
+                                    title: 'Error',
+                                    message: "Ma'lumot olishda xatolik mavjud .",
+                                    type: 'error',
+                                });
                             });
-                        });
                     }
-
                 }
             }
         },
         getRelation_name(item) {
-            let relation_item = {}
-            this.filter_relation_item.forEach(element => {
+            let relation_item = {};
+            this.filter_relation_item.forEach((element) => {
                 if (parseInt(element.id) == parseInt(item.type_id)) {
                     relation_item = element;
                 }
@@ -70,19 +74,18 @@ export default {
         },
         async updateFilter() {
             this.filter_query = {};
-
             for (const index in this.filter) {
                 if (this.filter.hasOwnProperty(index)) {
                     if (this.filter[index].type != 'none' && this.filter[index].value) {
-                        let key = this.filter[index].key
-                        this.filter_query[key] = this.filter[index].value
+                        let key = this.filter[index].key;
+                        this.filter_query[key] = this.filter[index].value;
                     }
                 }
             }
             if (this.pagination.page != 1) {
-                await this.updatePaginationFunction({ key: "page", value: 1 });
+                await this.updatePaginationFunction({ key: 'page', value: 1 });
             } else {
-                this.debouncedFetchData()
+                this.debouncedFetchData();
             }
         },
         // async fetchChildren(parent, parent_id) {
@@ -103,49 +106,61 @@ export default {
         // },
 
         async fetchData() {
-            this.loadingData = true
+            this.loadingData = true;
             this.filter_query = {
                 ...this.filter_query,
-                ...this.pagination
+                ...this.pagination,
             };
-            await this.list({
+            this.emptyList({
                 model: this.model_name,
-                query: this.filter_query,
-            }).then(() => {
-                this.loadingData = false
-            }).catch(error => {
-                this.loadingData = false
             });
-
+            await this.list({
+                    model: this.model_name,
+                    action_name: this.action_name,
+                    query: this.filter_query,
+                })
+                .then(() => {
+                    this.loadingData = false;
+                })
+                .catch((error) => {
+                    this.loadingData = false;
+                    this.$notify({
+                        title: 'Error',
+                        message: 'Маълумотлар келмади !!!',
+                        type: 'error',
+                    });
+                });
         },
         async updatePaginationFunction(data) {
             await this.updatePagination({
                 model: this.model_name,
-                data
-            })
+                data,
+            });
         },
         async edit(model) {
-            this.setModel(model)
+            this.setModel(model);
         },
         async deleteItem(id) {
             const isConfirm = confirm('Малумот ўчирилиб ташланади. Давом этасизми?');
             if (isConfirm) {
                 await this.delete({
-                    model: this.model_name,
-                    id: id,
-                }).then(() => {
-                    this.$notify({
-                        title: "Success",
-                        message: "Ma'lumot o'chirildi .",
-                        type: "success",
+                        model: this.model_name,
+                        id: id,
+                    })
+                    .then(() => {
+                        this.$notify({
+                            title: 'Success',
+                            message: "Ma'lumot o'chirildi .",
+                            type: 'success',
+                        });
+                    })
+                    .catch((error) => {
+                        this.$notify({
+                            title: 'Success',
+                            message: "Ma'lumotni o'chirishda xatolik yuz berdi.",
+                            type: 'success',
+                        });
                     });
-                }).catch(error => {
-                    this.$notify({
-                        title: "Success",
-                        message: "Ma'lumotni o'chirishda xatolik yuz berdi.",
-                        type: "success",
-                    });
-                });
 
                 await this.fetchData();
             }
@@ -154,13 +169,9 @@ export default {
 
     async mounted() {
         // await this.setLoading(true);
-
         // await this.fetchModels();
-
         // await this.fetchData();
-
         // await this.setLoading(false);
-
         // this.loadingData = true;
     },
 };

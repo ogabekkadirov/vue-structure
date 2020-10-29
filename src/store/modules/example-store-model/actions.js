@@ -1,77 +1,74 @@
-import * as crud from '@/utils/api/crud'
-import * as types from './properties/mutation_types'
+import * as crud from '@/utils/api/crud';
+import * as types from './properties/mutation_types';
 export const actions = {
-    list({
-        commit
-    }, query) {
-        let url = 'users/'
+    list({ commit }, query) {
+        let url = 'users/';
         return crud.list({
-            commit
-        }, types.namespace, url, query)
+                commit,
+            },
+            types.namespace,
+            url,
+            query
+        );
     },
-    store({
-        commit,
-    }, data) {
-        let url = 'users/'
+    store({ commit }, data) {
+        let url = 'users/';
         return crud.store({
-            commit
-        }, types.namespace, url, data)
+                commit,
+            },
+            types.namespace,
+            url,
+            data
+        );
     },
-    show({
-        dispatch,
-        commit
-    }, id) {
-        let url = 'users/' + id
+    show({ dispatch, commit }, id) {
+        let url = 'users/' + id;
         return crud.show({
-            dispatch,
-            commit
-        }, types.namespace, url)
+                dispatch,
+                commit,
+            },
+            types.namespace,
+            url
+        );
     },
-    update({
-        commit
-    }, data) {
-        let url = 'users/' + data.id
+    update({ commit }, data) {
+        let url = 'users/' + data.id;
         return crud.update({
-            commit
-        }, types.namespace, url, data)
+                commit,
+            },
+            types.namespace,
+            url,
+            data
+        );
     },
-    delete({
-        commit
-    }, id) {
-        let url = 'users/' + id
+    delete({ commit }, id) {
+        let url = 'users/' + id;
         return crud.destroy({
-            commit
-        }, types.namespace, url)
+                commit,
+            },
+            types.namespace,
+            url
+        );
     },
-
-    updateSort({
-        commit
-    }, sort) {
-        commit(types.UPDATE_SORT, sort)
+    emptyList({ commit }) {
+        commit(types.EMPTY_ITEMS);
     },
-    updateFilter({
-        commit
-    }, filter) {
-        commit(types.UPDATE_FILTER, JSON.parse(JSON.stringify(filter)))
+    updateSort({ commit }, sort) {
+        commit(types.UPDATE_SORT, sort);
     },
-    updateColumn({
-        commit
-    }, column) {
-        commit(types.UPDATE_COLUMN, column)
+    updateFilter({ commit }, filter) {
+        commit(types.UPDATE_FILTER, JSON.parse(JSON.stringify(filter)));
     },
-    updatePagination({
-        commit
-    }, pagination) {
-        commit(types.UPDATE_PAGINATION, pagination)
+    updateColumn({ commit }, column) {
+        commit(types.UPDATE_COLUMN, column);
     },
-    setModel({
-        commit
-    }) {
-        commit(types.RESET)
+    updatePagination({ commit }, pagination) {
+        commit(types.UPDATE_PAGINATION, pagination);
     },
-    resetModel({
-        commit
-    }) {
-        commit(types.SET_ITEM, data)
-    }
-}
+    setModel({ commit }) {
+        commit(types.RESET);
+    },
+    resetModel({ commit }) {
+        commit(types.SET_ITEM, data);
+    },
+};
