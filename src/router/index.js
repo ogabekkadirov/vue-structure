@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import MainLayout from '@/layouts/main'
-import AuthMiddleware from './middlewares/auth'
-Vue.use(VueRouter)
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import MainLayout from '@/layouts/main';
+import AuthMiddleware from './middlewares/auth';
+import { roleRoutes } from './models/roles';
+Vue.use(VueRouter);
 
 const routes = [{
-        path: "/",
+        path: '/',
         component: MainLayout,
         redirect: '/',
         children: [{
@@ -16,11 +17,11 @@ const routes = [{
             meta: {
                 title: 'Асосий саҳифа',
                 middleware: [AuthMiddleware],
-            }
-        }]
+            },
+        }, ],
     },
     {
-        path: "/auth",
+        path: '/auth',
         component: MainLayout,
         redirect: '/auth/login',
         children: [{
@@ -30,15 +31,15 @@ const routes = [{
             name: 'Login',
             meta: {
                 title: 'Кириш',
-            }
-        }]
+            },
+        }, ],
     },
-
-]
+    roleRoutes,
+];
 
 const createRouter = () =>
     new VueRouter({
-        mode: "history",
+        mode: 'history',
         scrollBehavior: () => ({
             y: 0,
         }),
@@ -62,11 +63,10 @@ function nextFactory(context, middleware, index) {
 }
 
 router.beforeEach((to, from, next) => {
-
     if (to.meta.middleware) {
-
         const middleware = Array.isArray(to.meta.middleware) ?
-            to.meta.middleware : [to.meta.middleware];
+            to.meta.middleware :
+            [to.meta.middleware];
         const context = {
             from,
             next,

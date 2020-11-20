@@ -1,6 +1,5 @@
 module.exports = {
-
-    title: 'vue-structure',
+    title: 'baholash-argos-uz',
 
     /**
      * @type {boolean} true | false
@@ -13,6 +12,5 @@ module.exports = {
      * @description Whether show the logo in sidebar
      */
     sidebarLogo: false,
-    tagsView: true
-
-}
+    tagsView: true,
+};

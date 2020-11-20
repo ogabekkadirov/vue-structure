@@ -1,20 +1,12 @@
 <template>
   <div class="bg-white shadow">
     <div class="container py-2">
-      <div class="flex items-center" :class="$route.meta.parent || $route.name !='Home'  ? 'justify-between' : 'justify-end'">
-        <template v-if="$route.meta.parent">
-          <el-page-header @back="changeRoute" >
-            <div class="text-gray-700 text-sm text-left" slot="title">
-              Рўйҳатга қайтиш
-            </div>
-
-            <div class="text-gray-700 text-sm text-left" slot="content">
-              {{ $route.meta.title }}
-            </div>
-          </el-page-header>
-        </template>
-        <template v-if="!$route.meta.parent && $route.name != 'Home'">
-           <el-page-header @back="$router.go(-1)">
+      <div class="flex items-center justify-between">
+        <template>
+          <el-page-header
+            @back="$router.go(-1)"
+            v-if="!$route.meta.parent && $route.name != 'Home'"
+          >
             <div class="text-gray-700 text-sm text-left" slot="title">
               Орқага қайтиш
             </div>
@@ -23,10 +15,39 @@
               {{ $route.meta.title }}
             </div>
           </el-page-header>
+          <div class="text-gray-700 text-sm text-left" slot="content" v-else>
+            | {{ $route.meta.title }}
+          </div>
+          <el-menu
+            :default-active="route"
+            class="el-menu-demo ml-10"
+            mode="horizontal"
+            @select="changeRoute"
+          >
+            <el-menu-item
+              :index="route.name"
+              v-for="route in routes"
+              :key="route.name + 'header_routes'"
+            >
+              <i :class="route.meta.icon"></i>{{ route.meta.title }}
+            </el-menu-item>
+          </el-menu>
         </template>
-        <el-select v-model="route" placeholder="Саҳифа" @change="changeRoute">
-          <el-option v-for="(route, index) in routes" :key="index" :label="route.meta.title" :value="route.name" v-show="route.is_show"></el-option>
-        </el-select>
+        <template>
+          <el-menu class="el-menu-demo ml-10" mode="horizontal">
+            <el-submenu index="Profile">
+              <template slot="title">Profile</template>
+              <el-menu-item index="2-4-1"
+                ><span
+                  ><i class="el-icon-user"></i> My Profile</span
+                ></el-menu-item
+              >
+              <el-menu-item index="2-4-2"
+                ><i class="el-icon-right"></i> Tizimdan chiqish</el-menu-item
+              >
+            </el-submenu>
+          </el-menu>
+        </template>
       </div>
     </div>
   </div>
@@ -39,33 +60,44 @@ export default {
   data: () => ({
     route: null,
     routes: [
-      { meta:{title: 'Aсосий ойна'}, name: 'Home',is_show:true},
-      { meta:{title: 'Ҳужжатлар'}, name: 'MyFiles',is_show:true},
-      { meta:{title: 'Ҳужжат қўшиш'}, name: 'FileStore',is_show:true},
-      { meta:{title: 'Ҳужжат турлар'}, name: 'FileTypes',is_show:true},
-      { meta:{title: 'Ҳужжат тури қўшиш'}, name: 'FileTypeStore',is_show:true},
-      { meta:{title: 'Ташкилотлар'}, name: 'Organizations',is_show:true },
-      { meta:{title: 'Ташкилотни кўриш'}, name: 'OrganizationShow',is_show:false},
+      {
+        meta: { title: 'Aсосий ойна', icon: 'el-icon-monitor' },
+        name: 'Home',
+        is_show: true,
+      },
+      {
+        meta: { title: 'Ассессментлар', icon: 'el-icon-user' },
+        name: 'Home1',
+        is_show: true,
+      },
+      {
+        meta: { title: 'Номзодлар', icon: 'el-icon-s-custom' },
+        name: 'Home2',
+        is_show: true,
+      },
+      {
+        meta: { title: 'Roles', icon: 'el-icon-cpu' },
+        name: 'Roles',
+        is_show: true,
+      },
     ],
   }),
 
   methods: {
-    async changeRoute() {
-      if (this.route !== this.$route.name) {
-        await this.$router.push({ name: this.route });
+    async changeRoute(key, keyPath) {
+      if (key !== this.$route.name) {
+        await this.$router.push({ name: key });
       }
     },
   },
 
   watch: {
     $route(to) {
-      console.log()
       if (to.meta.parent) {
         this.route = to.meta.parent.name;
       } else {
         this.route = to.name;
       }
-      console.log(this.route)
     },
   },
 
@@ -78,3 +110,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.el-menu-item a {
+  text-decoration: none;
+}
+</style>

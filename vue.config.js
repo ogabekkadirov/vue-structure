@@ -1,29 +1,29 @@
-"use strict";
-const path = require("path");
-const defaultSettings = require("./src/settings.js");
+'use strict';
+const path = require('path');
+const defaultSettings = require('./src/settings.js');
 
 function resolve(dir) {
     return path.join(__dirname, dir);
 }
 
-const name = defaultSettings.title || "vue Docs"; // page title
+const name = defaultSettings.title || 'vue Assessment System'; // page title
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 const port = 8080; // dev port
 
 module.exports = {
-    publicPath: "/",
-    outputDir: "dist",
-    assetsDir: "static",
-    lintOnSave: process.env.NODE_ENV === "development",
+    publicPath: '/',
+    outputDir: 'dist',
+    assetsDir: 'static',
+    lintOnSave: process.env.NODE_ENV === 'development',
     productionSourceMap: false,
     devServer: {
         port: port,
         open: true,
         overlay: {
             warnings: false,
-            errors: true
+            errors: true,
         },
         // proxy: {
         //     "/api": {
@@ -43,4 +43,4 @@ module.exports = {
         //     }
         // }
     },
-}
+};

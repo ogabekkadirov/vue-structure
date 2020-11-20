@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-import global from './modules/global'
-import auth from './modules/auth'
-
+import global from './modules/global';
+import auth from './modules/auth';
+import role from './modules/role';
 const store = new Vuex.Store({
     modules: {
         global,
         auth,
-    }
-})
-export default store
+        role,
+    },
+});
+export default store;

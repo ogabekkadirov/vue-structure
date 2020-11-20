@@ -5,7 +5,7 @@ export default {
         ...mapActions({
             list: 'LIST',
             show: 'SHOW',
-            store: 'STORE',
+            storeItem: 'STORE',
             edit: 'EDIT',
             delete: 'DELETE',
             setModel: 'SETMODEL',
