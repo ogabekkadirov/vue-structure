@@ -47,7 +47,7 @@ export default {
                                 query: query,
                             })
                             .then((res) => {
-                                this.filter[index].options = res.result.data;
+                                this.filter[index].options = res.data.data;
                                 if (item.key == 'type_id') {
                                     this.filter_relation_item = this.filter[index].options;
                                 }

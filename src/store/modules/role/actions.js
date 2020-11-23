@@ -1,86 +1,86 @@
-import * as crud from '@/utils/api/crud'
-import * as types from './properties/mutation_types'
-import { permissionParents } from '@/api/roles'
+import * as crud from '@/utils/api/crud';
+import * as types from './properties/mutation_types';
+import { permissionParents } from '@/api/roles';
 export const actions = {
-    list({
-        commit
-    }, query) {
-        let url = 'roles'
+    list({ commit }, query) {
+        let url = 'roles';
         return crud.list({
-            commit
-        }, types.namespace, url, query)
+                commit,
+            },
+            types.namespace,
+            url,
+            query
+        );
     },
-    store({
-        commit,
-    }, data) {
-        let url = 'roles'
+    store({ commit }, data) {
+        let url = 'roles';
         return crud.store({
-            commit
-        }, types.namespace, url, data)
+                commit,
+            },
+            types.namespace,
+            url,
+            data
+        );
     },
-    show({
-        dispatch,
-        commit
-    }, data) {
-        let url = 'roles/' + data.id
+    show({ dispatch, commit }, data) {
+        let url = 'roles/' + data.id;
         return crud.show({
-            dispatch,
-            commit
-        }, types.namespace, url, data.query)
+                dispatch,
+                commit,
+            },
+            types.namespace,
+            url,
+            data.query
+        );
     },
-    update({
-        commit
-    }, data) {
-        let url = 'roles/' + data.id
+    update({ commit }, data) {
+        let url = 'roles/' + data.id;
         return crud.update({
-            commit
-        }, types.namespace, url, data)
+                commit,
+            },
+            types.namespace,
+            url,
+            data
+        );
     },
-    delete({
-        commit
-    }, id) {
-        let url = 'roles/' + id
+    delete({ commit }, id) {
+        let url = 'roles/' + id;
         return crud.destroy({
-            commit
-        }, types.namespace, url)
+                commit,
+            },
+            types.namespace,
+            url
+        );
     },
-    permissionParents({
-        commit
-    }, query) {
+    permissionParents({ commit }, query) {
         return new Promise((resolve, reject) => {
             permissionParents(query)
                 .then((response) => {
-                    commit(types.SET_PERMISSIONS, response.result.data.data);
+                    commit(types.SET_PERMISSIONS, response.data);
                     resolve();
                 })
-                .catch(error => {
+                .catch((error) => {
                     reject(error);
                 });
         });
     },
-    updateSort({
-        commit
-    }, sort) {
-        commit(types.UPDATE_SORT, sort)
+
+    emptyList({ commit }) {
+        commit(types.EMPTY_ITEMS);
     },
-    updateFilter({
-        commit
-    }, filter) {
-        commit(types.UPDATE_FILTER, JSON.parse(JSON.stringify(filter)))
+    updateSort({ commit }, sort) {
+        commit(types.UPDATE_SORT, sort);
     },
-    updateColumn({
-        commit
-    }, column) {
-        commit(types.UPDATE_COLUMN, column)
+    updateFilter({ commit }, filter) {
+        commit(types.UPDATE_FILTER, JSON.parse(JSON.stringify(filter)));
     },
-    updatePagination({
-        commit
-    }, pagination) {
-        commit(types.UPDATE_PAGINATION, pagination)
+    updateColumn({ commit }, column) {
+        commit(types.UPDATE_COLUMN, column);
     },
-    resetModel({
-        commit
-    }) {
-        commit(types.RESET)
-    }
-}
+    updatePagination({ commit }, pagination) {
+        commit(types.UPDATE_PAGINATION, pagination);
+    },
+    resetModel({ commit }) {
+        commit(types.RESET);
+    },
+};

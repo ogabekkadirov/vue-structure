@@ -6,8 +6,8 @@
           <router-link :to="{ name: 'Organizations' }">
             <div class="items-center text-align-center py-4 ">
               <strong
-                >Давлат фуқаролик хизматчиларининг меҳнат фаолиятига оид
-                маъмурий ва норматив ҳужжатлар</strong
+                >Lorem ipsum dolor sit amet consectetur, adipisicing
+                elit.</strong
               >
             </div>
             <el-button type="primary" class="width-100" size="medium"
@@ -21,8 +21,8 @@
           <router-link :to="{ name: 'MyFiles' }">
             <div class="items-center text-align-center py-4">
               <strong
-                >Давлат фуқаролик хизматчиларининг меҳнат фаолиятини тартибга
-                солувчи норматив-ҳуқуқий ҳужжатлар</strong
+                >Lorem ipsum dolor, sit amet consectetur adipisicing
+                elit.</strong
               >
             </div>
             <el-button type="primary" class="width-100" size="medium"

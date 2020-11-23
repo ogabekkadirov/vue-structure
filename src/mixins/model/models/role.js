@@ -54,7 +54,7 @@ export default {
                     query: { include: 'Permissions' },
                 })
                 .then((res) => {
-                    let checked_permissions = res.result.data.permissions.data;
+                    let checked_permissions = res.data.permissions;
                     for (let key in checked_permissions) {
                         this.selected_permissions.push(checked_permissions[key].id);
                     }

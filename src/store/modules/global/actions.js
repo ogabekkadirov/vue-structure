@@ -2,8 +2,8 @@ export const actions = {
     LIST(context, { model, action_name, query }) {
         return context.dispatch(`${model}/${action_name}`, query);
     },
-    SHOW(context, { model, id }) {
-        return context.dispatch(`${model}/show`, id);
+    SHOW(context, { model, id, query }) {
+        return context.dispatch(`${model}/show`, { id: id, query: query });
     },
 
     STORE(context, { model, attributes }) {
